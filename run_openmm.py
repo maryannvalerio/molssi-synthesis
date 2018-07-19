@@ -30,6 +30,19 @@ platform = mm.Platform.getPlatformByName('CPU')
 ### of the existing forces, you should do it here - after the
 ### System has been created, but before the Simulation is created.
 
+#Custom bond force
+def AddSpringForce(a1,a2,k):
+  custom_bond = mm.CustomBondForce("0.5*k*(r-r0)^2")
+  custom_bond.addGlobalParameter("k",k)
+  custom_bond.addGlobalParameter("r0",2.5)
+  custom_bond.addBond(a1,a2)
+  system.addForce(custom_bond)
+a1 = 1
+a2 = 273
+k = float(input("What is the force constant? "))
+
+AddSpringForce(a1,a2,k)
+
 # Create a Simulation object by putting together the objects above
 simulation = app.Simulation(pdb.topology, system, integrator, platform)
 
